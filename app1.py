@@ -8,12 +8,13 @@ data = json.load(open("data.json"))
 
 def translate(w):
     w = w.lower()
+    close_match = get_close_matches(w, data.keys());
     if w in data:
         return data[w]
-    elif len(get_close_matches(w, data.keys())) > 0:
-        yn = input("Did you mean %s instead? Enter Y if yes, or N if no: " % get_close_matches(w, data.keys())[0])
+    elif len(close_match) > 0:
+        yn = input("Did you mean %s instead? Enter Y if yes, or N if no: " % close_match[0])
         if yn == "Y":
-            return data[get_close_matches(w, data.keys())[0]]
+            return data[close_match[0]]
         elif yn == "N":
             return "The word doesn't exist. Please double check it."
         else:
